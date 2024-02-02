@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Price Bought</th>
+            <th scope="col">TOTAL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction, data in zipped %}
+        <tr>
+            <th scope="row">{{ transaction.symbol }}</th>
+            <td>{{ data.name }}</td>
+            <td>{{ data.price | usd }}</td>
+            <td>{{ transaction.total_shares }}</td>
+            <td>{{ transaction.price | usd }}</td>
+            <td>{{ (transaction.price * transaction.total_shares) | usd }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="5">Investment</td>
+            <td class="border-0">{{ investment | usd}}</td>
+        </tr>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="5">Cash</td>
+            <td class="border-0">{{ balance | usd}}</td>
+        </tr>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="5">Total</td>
+            <td class="border-0">{{ total | usd}}</td>
+        </tr>
+    </tbody>
+  </table>
+{% endblock %}
